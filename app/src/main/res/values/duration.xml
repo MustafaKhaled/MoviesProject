@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="slideAnimValue">100</integer>
+    <integer name="negSlideAnimValue">-100</integer>
+    <integer name="slideAnimDuration">400</integer>
+</resources>
