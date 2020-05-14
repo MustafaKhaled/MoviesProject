@@ -1,4 +1,4 @@
-package com.avoid.covid19.di.scope
+package com.werd.khaleds.moviesprojectswvlchallenge.di.scope
 
 import javax.inject.Scope
 

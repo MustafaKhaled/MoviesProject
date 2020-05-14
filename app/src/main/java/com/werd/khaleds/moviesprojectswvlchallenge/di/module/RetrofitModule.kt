@@ -1,6 +1,6 @@
-package com.avoid.covid19.di.module
+package com.werd.khaleds.moviesprojectswvlchallenge.di.module
 
-import com.avoid.covid19.di.scope.ApplicationScope
+import com.werd.khaleds.moviesprojectswvlchallenge.di.scope.ApplicationScope
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module

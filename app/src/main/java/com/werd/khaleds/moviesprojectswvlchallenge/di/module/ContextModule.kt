@@ -1,7 +1,7 @@
-package com.avoid.covid19.di.module
+package com.werd.khaleds.moviesprojectswvlchallenge.di.module
 
 import android.content.Context
-import com.avoid.covid19.di.scope.ApplicationScope
+import com.werd.khaleds.moviesprojectswvlchallenge.di.scope.ApplicationScope
 import dagger.Module
 import dagger.Provides
 

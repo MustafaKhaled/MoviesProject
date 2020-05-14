@@ -2,11 +2,11 @@ package com.werd.khaleds.moviesprojectswvlchallenge
 
 import android.app.Application
 import android.content.Context
-import com.avoid.covid19.di.component.ApplicationComponent
+import com.werd.khaleds.moviesprojectswvlchallenge.di.component.ApplicationComponent
 import com.avoid.covid19.di.component.DaggerApplicationComponent
-import com.avoid.covid19.di.module.ContextModule
-import com.avoid.covid19.di.module.OkHttpModule
-import com.avoid.covid19.di.module.RetrofitModule
+import com.werd.khaleds.moviesprojectswvlchallenge.di.module.ContextModule
+import com.werd.khaleds.moviesprojectswvlchallenge.di.module.OkHttpModule
+import com.werd.khaleds.moviesprojectswvlchallenge.di.module.RetrofitModule
 
 class MyApplication: Application() {
     companion object {
