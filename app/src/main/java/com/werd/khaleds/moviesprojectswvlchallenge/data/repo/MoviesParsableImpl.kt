@@ -13,7 +13,7 @@ import javax.inject.Inject
 class MoviesParsableImpl @Inject constructor(): MoviesParsable {
     private val TAG = javaClass.simpleName
     private val fileUtils = FileUtils()
-    lateinit var moviesLocalResult: MoviesLocalResult
+    private var moviesLocalResult =  MoviesLocalResult(null)
     override fun parseMovies() {
         Log.d(TAG,"current thread is ".plus(Thread.currentThread().name))
         val gson = Gson()

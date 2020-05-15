@@ -3,6 +3,7 @@ package com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.module
 import androidx.lifecycle.ViewModel
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.ViewModelKey
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.AllMoviesViewModel
+import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.MovieDetailsViewModel
 
 import dagger.Binds
 import dagger.Module
@@ -14,5 +15,10 @@ interface ViewModelFactoryModule {
     @IntoMap
     @ViewModelKey(AllMoviesViewModel::class)
     fun bindAllMoviesViewModel(allMoviesViewModel: AllMoviesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MovieDetailsViewModel::class)
+    fun bindMovieDetailsViewModel(movieDetailsViewModel: MovieDetailsViewModel): ViewModel
 
 }

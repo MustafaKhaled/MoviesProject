@@ -10,12 +10,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenCreated
+import androidx.navigation.Navigation
 import com.werd.khaleds.moviesprojectswvlchallenge.MyApplication
+import com.werd.khaleds.moviesprojectswvlchallenge.R
 import com.werd.khaleds.moviesprojectswvlchallenge.data.di.component.DaggerDataComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component.DaggerPresentationComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.AllMoviesViewModel
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.master.di.component.DaggerAllMoviesComponent
+import kotlinx.android.synthetic.main.fragment_all_movies.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -45,17 +48,20 @@ class AllMoviesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        val view = inflater.inflate(R.layout.fragment_all_movies,container,false)
         viewModel.readMovies.observe(this, Observer {
             if (it!=null){
                 Log.d(TAG,"Movies returned successfully")
             }
         })
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        button.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_allMoviesFragment_to_movieDetails)
+        }
     }
 
     private fun startMoviesParsing() {
