@@ -8,8 +8,9 @@ import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MoviesLocalR
 import com.werd.khaleds.moviesprojectswvlchallenge.data.utils.FileUtils
 import com.werd.khaleds.moviesprojectswvlchallenge.domain.repo.MoviesParsable
 import java.lang.reflect.Type
+import javax.inject.Inject
 
-class MoviesParsableImpl: MoviesParsable {
+class MoviesParsableImpl @Inject constructor(): MoviesParsable {
     private val TAG = javaClass.simpleName
     private val fileUtils = FileUtils()
     lateinit var moviesLocalResult: MoviesLocalResult

@@ -1,7 +1,9 @@
 package com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -23,7 +25,7 @@ class AllMoviesViewModel @Inject constructor(private val useCase: AllMoviesUseCa
         }
     }
 
-//    fun readMovies(): MoviesLocalResult = liveData{
-//
-//    }
+    fun readMovies(): LiveData<MoviesLocalResult> = liveData(Dispatchers.IO){
+        emit(useCase.getMovies())
+    }
 }
