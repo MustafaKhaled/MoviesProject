@@ -8,25 +8,22 @@ import com.google.gson.reflect.TypeToken
 import com.werd.khaleds.moviesprojectswvlchallenge.MyApplication.Companion.appContext
 import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MovieItem
 import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MoviesLocalResult
+import com.werd.khaleds.moviesprojectswvlchallenge.domain.usecases.AllMoviesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.reflect.Type
 import javax.inject.Inject
 
-class AllMoviesViewModel @Inject constructor():ViewModel() {
+class AllMoviesViewModel @Inject constructor(private val useCase: AllMoviesUseCase):ViewModel() {
     private val TAG = javaClass.simpleName
     fun parseJson(){
         viewModelScope.launch(Dispatchers.Default){
             Log.d(TAG,"current thread is ".plus(Thread.currentThread().name))
-            val gson = Gson()
-            val fileName = "movies.json"
-            val jsonAsString = appContext.assets.open(fileName).bufferedReader().use{
-                it.readText()
-            }
-            val listType: Type = object : TypeToken<MoviesLocalResult>() {}.type
-            val result  = gson.fromJson<MoviesLocalResult>(jsonAsString,listType)
-            Log.d(TAG,"result size ".plus(result.movies?.size))
+            useCase.parseMovies()
         }
-
     }
+
+//    fun readMovies(): MoviesLocalResult = liveData{
+//
+//    }
 }
