@@ -1,8 +1,8 @@
 package com.werd.khaleds.moviesprojectswvlchallenge.ui.master.di.scope
 
-import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
 import javax.inject.Inject
+import javax.inject.Scope
 
-@Inject
-lateinit var viewModelFactory: ViewModelFactory
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
 annotation class AllMoviesScope
