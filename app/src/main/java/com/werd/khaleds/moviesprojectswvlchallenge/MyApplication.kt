@@ -1,9 +1,8 @@
 package com.werd.khaleds.moviesprojectswvlchallenge
-
 import android.app.Application
 import android.content.Context
 import com.werd.khaleds.moviesprojectswvlchallenge.di.component.ApplicationComponent
-import com.avoid.covid19.di.component.DaggerApplicationComponent
+import com.werd.khaleds.moviesprojectswvlchallenge.di.component.DaggerApplicationComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.di.module.ContextModule
 import com.werd.khaleds.moviesprojectswvlchallenge.di.module.OkHttpModule
 import com.werd.khaleds.moviesprojectswvlchallenge.di.module.RetrofitModule
@@ -20,5 +19,9 @@ class MyApplication: Application() {
             .okHttpModule(
                 OkHttpModule()
             ).retrofitModule(RetrofitModule()).build()
+    }
+
+    public fun getContext():Context{
+        return appContext
     }
 }

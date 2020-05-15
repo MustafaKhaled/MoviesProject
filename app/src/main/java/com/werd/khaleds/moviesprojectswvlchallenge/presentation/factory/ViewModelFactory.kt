@@ -1,4 +1,4 @@
-package com.avoid.covid19.presentation.factory
+package com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

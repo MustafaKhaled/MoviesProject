@@ -1,4 +1,4 @@
-package com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.scope
+package com.werd.khaleds.moviesprojectswvlchallenge.presentation.di
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey
