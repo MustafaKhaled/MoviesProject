@@ -12,6 +12,7 @@ class FileUtils {
     private val TAG = javaClass.simpleName
     private val fileName = "movies.txt"
     public fun writeFile(moviesLocalResult: MoviesLocalResult){
+        val file  = File(MyApplication.appContext.filesDir,fileName)
         val fos: FileOutputStream = MyApplication.appContext.openFileOutput(fileName, Context.MODE_PRIVATE)
         val oos = ObjectOutputStream(fos)
         oos.writeObject(moviesLocalResult)

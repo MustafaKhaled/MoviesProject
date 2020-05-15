@@ -27,7 +27,7 @@ class MoviesParsableImpl @Inject constructor(): MoviesParsable {
     }
 
     override fun getParsedMovies(): MoviesLocalResult {
-        return fileUtils.readFile()
+        return moviesLocalResult
     }
 
     override fun saveParsedData() {

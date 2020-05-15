@@ -45,25 +45,24 @@ class AllMoviesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.readMovies().observe(viewLifecycleOwner, Observer {
+        viewModel.readMovies.observe(this, Observer {
             if (it!=null){
-               Log.d(TAG,"Movies returned successfully")
+                Log.d(TAG,"Movies returned successfully")
             }
         })
-
     }
 
     private fun startMoviesParsing() {
         lifecycleScope.launch {
             Log.d(TAG,"current thread is ".plus(Thread.currentThread().name))
             whenCreated {
-                Thread.currentThread()
-                viewModel.parseJson()
+//                viewModel.parseJson()
             }
         }
     }
