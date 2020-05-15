@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenCreated
 import com.werd.khaleds.moviesprojectswvlchallenge.MyApplication
+import com.werd.khaleds.moviesprojectswvlchallenge.data.di.component.DaggerDataComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component.DaggerPresentationComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.AllMoviesViewModel
@@ -29,7 +30,9 @@ class AllMoviesFragment : Fragment() {
         DaggerAllMoviesComponent.builder()
             .presentationComponent(
                 DaggerPresentationComponent.builder()
-                    .applicationComponent(MyApplication.applicationComponent).build()
+                    .dataComponent(DaggerDataComponent.builder()
+                        .applicationComponent(MyApplication.applicationComponent).build())
+                    .build()
             ).build().inject(this)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(AllMoviesViewModel::class.java)
