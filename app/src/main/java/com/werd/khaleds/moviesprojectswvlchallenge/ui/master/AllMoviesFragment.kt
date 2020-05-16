@@ -36,8 +36,10 @@ class AllMoviesFragment : Fragment() {
         DaggerAllMoviesComponent.builder()
             .presentationComponent(
                 DaggerPresentationComponent.builder()
-                    .dataComponent(DaggerDataComponent.builder()
-                        .applicationComponent(MyApplication.applicationComponent).build())
+                    .dataComponent(
+                        DaggerDataComponent.builder()
+                            .applicationComponent(MyApplication.applicationComponent).build()
+                    )
                     .build()
             ).build().inject(this)
 
@@ -50,25 +52,23 @@ class AllMoviesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_all_movies,container,false)
+        val view = inflater.inflate(R.layout.fragment_all_movies, container, false)
         viewModel.readMovies.observe(viewLifecycleOwner, Observer {
-            if (it!=null){
-              when(it){
-                  is Loading -> {
-                      moviesList.visibility = View.GONE
-                      progressBar.visibility = View.VISIBLE
-                  }
+            if (it != null) {
+                when (it) {
+                    is Loading -> {
+                        showResults(false)
+                    }
 
-                  is Success -> {
-                      Handler().postDelayed({
-                          progressBar.visibility = View.GONE
-                      },2000L)
-                  }
-//
-//                  is Error -> {
-//
-//                  }
-              }
+                    is Success -> {
+                        showResults(true)
+
+                    }
+
+                    is Error -> {
+
+                    }
+                }
             }
         })
         return view
@@ -83,10 +83,20 @@ class AllMoviesFragment : Fragment() {
 
     private fun startMoviesParsing() {
         lifecycleScope.launch {
-            Log.d(TAG,"current thread is ".plus(Thread.currentThread().name))
+            Log.d(TAG, "current thread is ".plus(Thread.currentThread().name))
             whenCreated {
                 viewModel.parseJson()
             }
+        }
+    }
+    fun showResults( show: Boolean){
+        if(show){
+            moviesList.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
+        }
+        else{
+            moviesList.visibility = View.GONE
+            progressBar.visibility = View.VISIBLE
         }
     }
 }
