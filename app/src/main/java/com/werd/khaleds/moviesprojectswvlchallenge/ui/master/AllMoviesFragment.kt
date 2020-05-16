@@ -1,6 +1,7 @@
 package com.werd.khaleds.moviesprojectswvlchallenge.ui.master
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenCreated
+import com.google.android.material.snackbar.Snackbar
 import com.werd.khaleds.moviesprojectswvlchallenge.MyApplication
 import com.werd.khaleds.moviesprojectswvlchallenge.R
 import com.werd.khaleds.moviesprojectswvlchallenge.util.Results.*
@@ -18,6 +20,7 @@ import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component.Dag
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.AllMoviesViewModel
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.master.di.component.DaggerAllMoviesComponent
+import com.werd.khaleds.moviesprojectswvlchallenge.util.snack
 import kotlinx.android.synthetic.main.fragment_all_movies.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -52,16 +55,19 @@ class AllMoviesFragment : Fragment() {
             if (it!=null){
               when(it){
                   is Loading -> {
+                      moviesList.visibility = View.GONE
                       progressBar.visibility = View.VISIBLE
                   }
 
                   is Success -> {
-                      progressBar.visibility = View.GONE
+                      Handler().postDelayed({
+                          progressBar.visibility = View.GONE
+                      },2000L)
                   }
-
-                  is Error -> {
-
-                  }
+//
+//                  is Error -> {
+//
+//                  }
               }
             }
         })
@@ -84,3 +90,5 @@ class AllMoviesFragment : Fragment() {
         }
     }
 }
+
+

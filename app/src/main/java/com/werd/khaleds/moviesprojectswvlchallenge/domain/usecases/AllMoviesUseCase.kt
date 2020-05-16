@@ -8,7 +8,6 @@ import javax.inject.Inject
 class AllMoviesUseCase @Inject constructor(private val moviesParsable: MoviesParsable){
     fun parseMovies(){
         moviesParsable.parseMovies()
-//        moviesParsable.saveParsedData()
     }
 
     fun getMovies(): Results<MoviesLocalResult> {

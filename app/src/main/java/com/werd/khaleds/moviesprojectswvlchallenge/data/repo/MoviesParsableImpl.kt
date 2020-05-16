@@ -7,6 +7,7 @@ import com.werd.khaleds.moviesprojectswvlchallenge.MyApplication
 import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MoviesLocalResult
 import com.werd.khaleds.moviesprojectswvlchallenge.data.utils.FileUtils
 import com.werd.khaleds.moviesprojectswvlchallenge.domain.repo.MoviesParsable
+import com.werd.khaleds.moviesprojectswvlchallenge.util.Results
 import java.lang.reflect.Type
 import javax.inject.Inject
 
@@ -26,8 +27,8 @@ class MoviesParsableImpl @Inject constructor(): MoviesParsable {
         Log.d(TAG,"result size ".plus(moviesLocalResult.movies?.size))
     }
 
-    override fun getParsedMovies(): MoviesLocalResult {
-        return moviesLocalResult
+    override fun getParsedMovies(): Results<MoviesLocalResult> {
+        return Results.Success(moviesLocalResult)
     }
 
     override fun saveParsedData() {
