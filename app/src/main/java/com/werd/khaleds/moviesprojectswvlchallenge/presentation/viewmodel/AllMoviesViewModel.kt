@@ -26,7 +26,6 @@ class AllMoviesViewModel @Inject constructor(private val useCase: AllMoviesUseCa
     }
 
     var readMovies = liveData(Dispatchers.IO){
-        useCase.parseMovies()
         val result = useCase.getMovies()
         emit(result)
     }

@@ -9,5 +9,4 @@ import dagger.Component
 @Component(dependencies = [PresentationComponent::class])
 interface AllMoviesComponent {
     fun inject(allMoviesFragment: AllMoviesFragment)
-    fun inject(detailsFragment: MovieDetailsFragment)
 }

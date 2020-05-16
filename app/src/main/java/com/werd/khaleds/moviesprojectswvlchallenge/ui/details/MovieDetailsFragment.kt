@@ -14,6 +14,7 @@ import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component.Dag
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.AllMoviesViewModel
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.MovieDetailsViewModel
+import com.werd.khaleds.moviesprojectswvlchallenge.ui.details.di.component.DaggerMovieDetailsComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.master.di.component.DaggerAllMoviesComponent
 import javax.inject.Inject
 
@@ -24,7 +25,7 @@ class MovieDetailsFragment: Fragment() {
     lateinit var viewModel: MovieDetailsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerAllMoviesComponent.builder()
+        DaggerMovieDetailsComponent.builder()
             .presentationComponent(
                 DaggerPresentationComponent.builder()
                     .dataComponent(

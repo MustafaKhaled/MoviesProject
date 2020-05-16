@@ -68,7 +68,7 @@ class AllMoviesFragment : Fragment() {
         lifecycleScope.launch {
             Log.d(TAG,"current thread is ".plus(Thread.currentThread().name))
             whenCreated {
-//                viewModel.parseJson()
+                viewModel.parseJson()
             }
         }
     }
