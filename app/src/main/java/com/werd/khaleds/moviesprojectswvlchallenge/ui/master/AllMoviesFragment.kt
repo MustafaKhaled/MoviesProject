@@ -2,6 +2,7 @@ package com.werd.khaleds.moviesprojectswvlchallenge.ui.master
 
 import android.os.Bundle
 import android.util.Log
+import kotlinx.android.synthetic.main.fragment_all_movies.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +23,6 @@ import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component.Dag
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.AllMoviesViewModel
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.master.di.component.DaggerAllMoviesComponent
-import kotlinx.android.synthetic.main.fragment_all_movies.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -55,9 +55,12 @@ class AllMoviesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_all_movies, container, false)
+        return inflater.inflate(R.layout.fragment_all_movies, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
-        viewModel.readMovies.observe(viewLifecycleOwner, Observer {
+        viewModel.readMovies().observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 when (it) {
                     is Loading -> {
@@ -66,6 +69,8 @@ class AllMoviesFragment : Fragment() {
 
                     is Success -> {
                         showResults(true)
+                        Log.d(TAG,"Data observed ".plus(it.data))
+                        addMoviesList(it.data)
 
                     }
 
@@ -75,7 +80,6 @@ class AllMoviesFragment : Fragment() {
                 }
             }
         })
-        return view
     }
 
     private fun startMoviesParsing() {
@@ -105,6 +109,11 @@ class AllMoviesFragment : Fragment() {
     private fun movieItemClicked(movieItem: MovieItem) {
         val action = AllMoviesFragmentDirections.actionAllMoviesFragmentToMovieDetails(movieItem)
         Navigation.findNavController(moviesList).navigate(action)
+    }
+
+    private fun addMoviesList(moviesList: MoviesLocalResult){
+        Log.d(TAG,"Add movies to RecyclerView ".plus(moviesList.movies))
+        adapter.addAll(moviesList.movies)
     }
 
 

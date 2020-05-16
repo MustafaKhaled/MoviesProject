@@ -1,7 +1,7 @@
 package com.werd.khaleds.moviesprojectswvlchallenge.util
 
 sealed class Results<out T: Any>(data: T? = null, message: String? = null) {
-    class Success<out T : Any>(val data: T?) : Results<T>()
+    class Success<out T : Any>(val data: T) : Results<T>()
     class Loading : Results<Nothing>()
     class Error(val message: String?) : Results<Nothing>()
 }
