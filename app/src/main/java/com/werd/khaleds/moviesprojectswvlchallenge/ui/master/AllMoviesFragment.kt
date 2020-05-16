@@ -105,6 +105,9 @@ class AllMoviesFragment : Fragment() {
         if (item.itemId == R.id.order) {
             reverseList()
         }
+        else if(item.itemId == R.id.search){
+            Navigation.findNavController(moviesList).navigate(R.id.action_allMoviesFragment_to_searchFragment)
+        }
         return true
     }
 

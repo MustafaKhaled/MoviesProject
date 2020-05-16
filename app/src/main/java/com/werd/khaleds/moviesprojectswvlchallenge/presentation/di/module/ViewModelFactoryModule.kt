@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.ViewModelKey
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.AllMoviesViewModel
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.MovieDetailsViewModel
+import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.SearchViewModel
 
 import dagger.Binds
 import dagger.Module
@@ -20,5 +21,10 @@ interface ViewModelFactoryModule {
     @IntoMap
     @ViewModelKey(MovieDetailsViewModel::class)
     fun bindMovieDetailsViewModel(movieDetailsViewModel: MovieDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel::class)
+    fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
 
 }
