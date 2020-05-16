@@ -23,6 +23,7 @@ import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component.Dag
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.AllMoviesViewModel
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.master.di.component.DaggerAllMoviesComponent
+import com.werd.khaleds.moviesprojectswvlchallenge.util.snack
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -75,7 +76,7 @@ class AllMoviesFragment : Fragment() {
                     }
 
                     is Error -> {
-
+                        moviesList.snack(getString(R.string.error_fetch_movies))
                     }
                 }
             }
