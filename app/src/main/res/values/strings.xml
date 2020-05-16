@@ -3,4 +3,5 @@
     <string name="error_fetch_movies">Something went wrong while fetching movies</string>
     <string name="ascending_menu">Ascending</string>
     <string name="descending_menu">Descending</string>
+    <string name="search_menu">search</string>
 </resources>
