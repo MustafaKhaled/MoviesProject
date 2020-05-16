@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenCreated
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.werd.khaleds.moviesprojectswvlchallenge.MyApplication
 import com.werd.khaleds.moviesprojectswvlchallenge.R
 import com.werd.khaleds.moviesprojectswvlchallenge.util.Results.*
@@ -29,7 +30,8 @@ class AllMoviesFragment : Fragment() {
     private val TAG = javaClass.simpleName
     private lateinit var viewModel: AllMoviesViewModel
     private lateinit var adapter: AllMoviesAdapter
-    private val ascendingMovies = HashMap<Long, MovieItem>()
+    private lateinit var layoutManager: LinearLayoutManager
+    private var ascendingOrder = true
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -69,7 +71,7 @@ class AllMoviesFragment : Fragment() {
 
                     is Success -> {
                         showResults(true)
-                        Log.d(TAG,"Data observed ".plus(it.data))
+                        Log.d(TAG, "Data observed ".plus(it.data))
                         addMoviesList(it.data)
 
                     }
@@ -87,6 +89,25 @@ class AllMoviesFragment : Fragment() {
         inflater.inflate(R.menu.menu, menu);
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        val menuItem = menu.findItem(R.id.order)
+        if (ascendingOrder) {
+            menuItem.title = getString(R.string.descending_menu)
+            ascendingOrder = false
+        } else {
+            menuItem.title = getString(R.string.ascending_menu)
+            ascendingOrder = true
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.order) {
+            reverseList()
+        }
+        return true
+    }
+
     private fun startMoviesParsing() {
         lifecycleScope.launch {
             whenCreated {
@@ -95,7 +116,7 @@ class AllMoviesFragment : Fragment() {
         }
     }
 
-    fun showResults(show: Boolean) {
+    private fun showResults(show: Boolean) {
         if (show) {
             moviesList.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
@@ -107,7 +128,8 @@ class AllMoviesFragment : Fragment() {
 
     private fun setupRecyclerView() {
         adapter = AllMoviesAdapter { article: MovieItem -> movieItemClicked(article) }
-        moviesList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        moviesList.layoutManager = layoutManager
         moviesList.adapter = adapter
     }
 
@@ -116,9 +138,21 @@ class AllMoviesFragment : Fragment() {
         Navigation.findNavController(moviesList).navigate(action)
     }
 
-    private fun addMoviesList(moviesList: MoviesLocalResult){
-        Log.d(TAG,"Add movies to RecyclerView ".plus(moviesList.movies))
+    private fun addMoviesList(moviesList: MoviesLocalResult) {
+        Log.d(TAG, "Add movies to RecyclerView ".plus(moviesList.movies))
         adapter.addAll(moviesList.movies)
+    }
+
+    private fun reverseList() {
+        if(layoutManager.reverseLayout && layoutManager.stackFromEnd){
+            layoutManager.reverseLayout = false
+            layoutManager.stackFromEnd = false
+        }
+        else{
+            layoutManager.reverseLayout = true
+            layoutManager.stackFromEnd = true
+        }
+
     }
 
 
