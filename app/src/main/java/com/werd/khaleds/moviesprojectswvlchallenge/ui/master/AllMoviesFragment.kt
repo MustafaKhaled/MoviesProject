@@ -1,9 +1,6 @@
 package com.werd.khaleds.moviesprojectswvlchallenge.ui.master
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,17 +12,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenCreated
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.werd.khaleds.moviesprojectswvlchallenge.MyApplication
 import com.werd.khaleds.moviesprojectswvlchallenge.R
 import com.werd.khaleds.moviesprojectswvlchallenge.util.Results.*
 import com.werd.khaleds.moviesprojectswvlchallenge.data.di.component.DaggerDataComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MovieItem
+import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MoviesLocalResult
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component.DaggerPresentationComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.AllMoviesViewModel
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.master.di.component.DaggerAllMoviesComponent
-import com.werd.khaleds.moviesprojectswvlchallenge.util.snack
 import kotlinx.android.synthetic.main.fragment_all_movies.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,7 +30,8 @@ class AllMoviesFragment : Fragment() {
     private val TAG = javaClass.simpleName
     private lateinit var viewModel: AllMoviesViewModel
     private lateinit var adapter: AllMoviesAdapter
-    private val ascendingMovies = HashMap<Long,MovieItem>()
+    private val ascendingMovies = HashMap<Long, MovieItem>()
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,41 +78,36 @@ class AllMoviesFragment : Fragment() {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//        button.setOnClickListener {
-//            Navigation.findNavController(view).navigate(R.id.action_allMoviesFragment_to_movieDetails)
-//        }
-    }
-
     private fun startMoviesParsing() {
         lifecycleScope.launch {
-            Log.d(TAG, "current thread is ".plus(Thread.currentThread().name))
             whenCreated {
                 viewModel.parseJson()
             }
         }
     }
-    fun showResults( show: Boolean){
-        if(show){
+
+    fun showResults(show: Boolean) {
+        if (show) {
             moviesList.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
-        }
-        else{
+        } else {
             moviesList.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
         }
     }
-    private fun setupRecyclerView(){
-        adapter = AllMoviesAdapter {article : MovieItem -> movieItemClicked(article) }
-        moviesList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
+
+    private fun setupRecyclerView() {
+        adapter = AllMoviesAdapter { article: MovieItem -> movieItemClicked(article) }
+        moviesList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         moviesList.adapter = adapter
     }
 
-    private fun  movieItemClicked(movieItem: MovieItem) {
-            Navigation.findNavController(moviesList).navigate(R.id.action_allMoviesFragment_to_movieDetails)
-
+    private fun movieItemClicked(movieItem: MovieItem) {
+        val action = AllMoviesFragmentDirections.actionAllMoviesFragmentToMovieDetails(movieItem)
+        Navigation.findNavController(moviesList).navigate(action)
     }
+
+
 }
 
 
