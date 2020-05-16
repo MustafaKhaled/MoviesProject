@@ -5,15 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.werd.khaleds.moviesprojectswvlchallenge.MyApplication.Companion.appContext
-import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MovieItem
+import com.werd.khaleds.moviesprojectswvlchallenge.util.Results
 import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MoviesLocalResult
 import com.werd.khaleds.moviesprojectswvlchallenge.domain.usecases.AllMoviesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.reflect.Type
 import javax.inject.Inject
 
 class AllMoviesViewModel @Inject constructor(private val useCase: AllMoviesUseCase):ViewModel() {
@@ -25,7 +21,7 @@ class AllMoviesViewModel @Inject constructor(private val useCase: AllMoviesUseCa
         }
     }
 
-    var readMovies = liveData(Dispatchers.IO){
+    var readMovies: LiveData<Results<MoviesLocalResult>>  = liveData(Dispatchers.IO){
         val result = useCase.getMovies()
         emit(result)
     }
