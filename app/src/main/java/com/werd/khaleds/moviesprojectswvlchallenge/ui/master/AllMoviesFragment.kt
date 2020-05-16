@@ -2,10 +2,8 @@ package com.werd.khaleds.moviesprojectswvlchallenge.ui.master
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import kotlinx.android.synthetic.main.fragment_all_movies.*
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -37,6 +35,7 @@ class AllMoviesFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelFactory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
         DaggerAllMoviesComponent.builder()
             .presentationComponent(
                 DaggerPresentationComponent.builder()
@@ -81,6 +80,11 @@ class AllMoviesFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu, menu);
     }
 
     private fun startMoviesParsing() {

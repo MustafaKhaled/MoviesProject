@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MoviesProject[SWVL Challenge]</string>
     <string name="error_fetch_movies">Something went wrong while fetching movies</string>
+    <string name="ascending_menu">Ascending</string>
 </resources>
