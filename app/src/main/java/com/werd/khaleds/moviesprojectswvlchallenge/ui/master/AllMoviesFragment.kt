@@ -65,7 +65,7 @@ class AllMoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
-        sharedViewModel?.readMovies()?.observe(viewLifecycleOwner, Observer {
+        sharedViewModel.readMovies().observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 when (it) {
                     is Loading -> {

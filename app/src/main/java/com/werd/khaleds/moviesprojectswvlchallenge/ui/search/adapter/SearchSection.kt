@@ -18,9 +18,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-internal class ContactsSection(
+internal class SearchSection(
     moviesList: ArrayList<MovieItem>,
-    title: String
+    title: Int
 ) : FilterableSection, Section(
         SectionParameters.builder()
             .itemResourceId(R.layout.movie_item_search)
@@ -28,7 +28,7 @@ internal class ContactsSection(
             .build()
     ) {
     private var filteredList: ArrayList<MovieItem>
-    private var title: String
+    private var title: Int
      init {
          this.filteredList = ArrayList(moviesList)
          this.title = title
@@ -47,7 +47,7 @@ internal class ContactsSection(
         position: Int
     ) {
         val itemHolder: ItemViewHolder = holder as ItemViewHolder
-        val movieItem: MovieItem = filteredList[holder.adapterPosition]
+        val movieItem: MovieItem = filteredList[position]
 
         itemHolder.bind(movieItem)
     }
@@ -82,8 +82,8 @@ internal class ContactsSection(
     }
 
     class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(title: String) = with(itemView) {
-            yearTitle.text = title
+        fun bind(title: Int) = with(itemView) {
+            yearTitle.text = title.toString()
         }
     }
 

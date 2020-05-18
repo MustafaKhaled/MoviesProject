@@ -6,6 +6,8 @@ import android.view.*
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SortedList
 import com.werd.khaleds.moviesprojectswvlchallenge.MyApplication
 import com.werd.khaleds.moviesprojectswvlchallenge.R
 import com.werd.khaleds.moviesprojectswvlchallenge.data.di.component.DaggerDataComponent
@@ -14,18 +16,22 @@ import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component.Dag
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.MoviesSharedViewModel
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.MainActivity
+import com.werd.khaleds.moviesprojectswvlchallenge.ui.search.adapter.SearchSection
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.search.di.component.DaggerSearchComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.util.Results
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
+import kotlinx.android.synthetic.main.fragment_search.*
 import java.util.*
 import javax.inject.Inject
 import kotlin.Comparator
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class SearchFragment : Fragment() {
     val TAG = javaClass.simpleName
     private val sortedList = ArrayList<MovieItem>()
+    private val moviesMap = TreeMap<Int, ArrayList<MovieItem>>()
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -56,18 +62,39 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        sectionedAdapter = SectionedRecyclerViewAdapter()
+
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sectionedAdapter = SectionedRecyclerViewAdapter()
+        searchRV.layoutManager = LinearLayoutManager(context)
+        searchRV.adapter = sectionedAdapter
         val result = viewModel.readMovies().value
         if (result is Results.Success) {
-            val moviesList = result.data.movies
+            val moviesList = ArrayList<MovieItem>()
+            moviesList.addAll(result.data.movies)
             sortList(moviesList)
+            sortListGrouping(sortedList)
+            moviesMap.forEach { (key, value) ->
+                sectionedAdapter.addSection(SearchSection(value, key))
+            }
 
+        }
+    }
 
+    private fun sortListGrouping(sortedList: ArrayList<MovieItem>) {
+        for (movie in sortedList) {
+            if (moviesMap.containsKey(movie.year)) {
+                val currentList = moviesMap[movie.year]
+                currentList?.add(movie)
+                movie.year?.let { currentList?.let { it1 -> moviesMap.put(it, it1) } }
+            } else {
+                val newList = ArrayList<MovieItem>()
+                newList.add(movie)
+                movie.year?.let { moviesMap.put(it, newList) }
+            }
         }
     }
 
@@ -99,11 +126,15 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(query: String): Boolean {
-                for (section in sectionedAdapter.copyOfSectionsMap.values) {
-                    if (section is FilterableSection) {
-                        (section as FilterableSection).filter(query)
-                    }
+                moviesMap.forEach{(key, value) ->
+
+
                 }
+//                for (section in sectionedAdapter.copyOfSectionsMap.values) {
+//                    if (section is FilterableSection) {
+//                        (section as FilterableSection).filter(query)
+//                    }
+//                }
                 sectionedAdapter.notifyDataSetChanged()
 
                 return true
