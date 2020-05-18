@@ -11,16 +11,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenCreated
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.werd.khaleds.moviesprojectswvlchallenge.MyApplication
 import com.werd.khaleds.moviesprojectswvlchallenge.R
 import com.werd.khaleds.moviesprojectswvlchallenge.util.Results.*
 import com.werd.khaleds.moviesprojectswvlchallenge.data.di.component.DaggerDataComponent
+import com.werd.khaleds.moviesprojectswvlchallenge.data.di.module.MoviesLocalResultModule
 import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MovieItem
 import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MoviesLocalResult
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component.DaggerPresentationComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
-import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.AllMoviesViewModel
+import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.MoviesSharedViewModel
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.master.di.component.DaggerAllMoviesComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.util.snack
 import kotlinx.coroutines.launch
@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 class AllMoviesFragment : Fragment() {
     private val TAG = javaClass.simpleName
-    private lateinit var viewModel: AllMoviesViewModel
+    private lateinit var sharedViewModel: MoviesSharedViewModel
     private lateinit var adapter: AllMoviesAdapter
     private lateinit var layoutManager: LinearLayoutManager
     private var ascendingOrder = true
@@ -42,14 +42,16 @@ class AllMoviesFragment : Fragment() {
             .presentationComponent(
                 DaggerPresentationComponent.builder()
                     .dataComponent(
-                        DaggerDataComponent.builder()
+                        DaggerDataComponent.builder().moviesLocalResultModule(
+                            MoviesLocalResultModule()
+                        )
                             .applicationComponent(MyApplication.applicationComponent).build()
                     )
                     .build()
             ).build()
         depend.inject(this)
 
-        viewModel = ViewModelProvider(this, viewModelFactory).get(AllMoviesViewModel::class.java)
+        sharedViewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(MoviesSharedViewModel::class.java) }!!
         startMoviesParsing()
     }
 
@@ -63,7 +65,7 @@ class AllMoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
-        viewModel.readMovies().observe(viewLifecycleOwner, Observer {
+        sharedViewModel?.readMovies()?.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 when (it) {
                     is Loading -> {
@@ -115,7 +117,7 @@ class AllMoviesFragment : Fragment() {
     private fun startMoviesParsing() {
         lifecycleScope.launch {
             whenCreated {
-                viewModel.parseJson()
+                sharedViewModel.parseJson()
             }
         }
     }

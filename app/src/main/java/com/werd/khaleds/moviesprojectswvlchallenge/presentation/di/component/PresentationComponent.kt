@@ -1,5 +1,6 @@
 package com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component
 import com.werd.khaleds.moviesprojectswvlchallenge.data.di.component.DataComponent
+import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MoviesLocalResult
 import com.werd.khaleds.moviesprojectswvlchallenge.di.component.ApplicationComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.scope.PresentationScope
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
@@ -11,5 +12,5 @@ import dagger.Component
 interface PresentationComponent {
 
     fun exposeViewModel(): ViewModelFactory
-
+    fun exposeMovieResults(): MoviesLocalResult
 }

@@ -10,11 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.werd.khaleds.moviesprojectswvlchallenge.MyApplication
 import com.werd.khaleds.moviesprojectswvlchallenge.data.di.component.DaggerDataComponent
+import com.werd.khaleds.moviesprojectswvlchallenge.data.di.module.MoviesLocalResultModule
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component.DaggerPresentationComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
-import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.AllMoviesViewModel
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.MovieDetailsViewModel
-import com.werd.khaleds.moviesprojectswvlchallenge.ui.details.di.component.DaggerMovieDetailsComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.master.di.component.DaggerAllMoviesComponent
 import javax.inject.Inject
 
@@ -29,7 +28,9 @@ class MovieDetailsFragment: Fragment() {
             .presentationComponent(
                 DaggerPresentationComponent.builder()
                     .dataComponent(
-                        DaggerDataComponent.builder()
+                        DaggerDataComponent.builder().moviesLocalResultModule(
+                            MoviesLocalResultModule()
+                        )
                             .applicationComponent(MyApplication.applicationComponent).build())
                     .build()
             ).build()

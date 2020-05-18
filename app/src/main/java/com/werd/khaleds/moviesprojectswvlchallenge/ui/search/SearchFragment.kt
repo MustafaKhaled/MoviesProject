@@ -7,21 +7,17 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.werd.khaleds.moviesprojectswvlchallenge.MyApplication
 import com.werd.khaleds.moviesprojectswvlchallenge.R
 import com.werd.khaleds.moviesprojectswvlchallenge.data.di.component.DaggerDataComponent
-import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MovieItem
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component.DaggerPresentationComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
-import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.MovieDetailsViewModel
-import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.SearchViewModel
+import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.MoviesSharedViewModel
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.MainActivity
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.search.di.component.DaggerSearchComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.util.Results
-import com.werd.khaleds.moviesprojectswvlchallenge.util.snack
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
-import kotlinx.android.synthetic.main.fragment_all_movies.*
-import java.util.*
 import javax.inject.Inject
 
 
@@ -29,7 +25,7 @@ class SearchFragment: Fragment() {
     val TAG = javaClass.simpleName
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    lateinit var viewModel: SearchViewModel
+    lateinit var viewModel: MoviesSharedViewModel
     lateinit var sectionedAdapter: SectionedRecyclerViewAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +38,7 @@ class SearchFragment: Fragment() {
                             .applicationComponent(MyApplication.applicationComponent).build())
                     .build()
             ).build().inject(this)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
+        viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(MoviesSharedViewModel::class.java) }!!
     }
 
     override fun onCreateView(
@@ -56,20 +52,13 @@ class SearchFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.readMovies.observe(this, Observer {
-            if (it!=null){
-                when (it) {
-                    is Results.Success -> {
-                        val unsortedMovies = it.data.movies
-                        Log.d(TAG," UN Sorted List: ".plus(unsortedMovies))
-                        val sortedList  = unsortedMovies?.sortWith(compareBy({it.rating}, {it.rating}))
-                        Log.d(TAG," Sorted List: ".plus(sortedList))
+        val result = viewModel.readMovies().value
+        if(result is Results.Success){
+            Log.d(TAG," UN Sorted List: ".plus(result.data.movies))
+//                        val sortedList  = unsortedMovies?.sortWith(compareBy({it.rating}, {it.rating}))
+//                        Log.d(TAG," Sorted List: ".plus(sortedList))
 
-                    }
-
-                }
-            }
-        })
+        }
     }
 
 

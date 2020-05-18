@@ -10,7 +10,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AllMoviesViewModel @Inject constructor(private val useCase: AllMoviesUseCase):ViewModel() {
+class MoviesSharedViewModel @Inject constructor(private val useCase: AllMoviesUseCase):ViewModel() {
     private val moviesMutableLiveData = MutableLiveData<Results<MoviesLocalResult>>()
     init {
         moviesMutableLiveData.postValue(Results.Loading())
