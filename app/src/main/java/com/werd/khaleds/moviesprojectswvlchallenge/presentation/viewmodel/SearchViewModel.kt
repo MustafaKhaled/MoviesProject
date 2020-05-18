@@ -10,7 +10,7 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(private val useCase: AllMoviesUseCase): ViewModel() {
 
     var readMovies = liveData(Dispatchers.IO){
-        emit(Results.Loading())
+//        emit(Results.Loading())
         val result = useCase.getMovies()
         emit(result)
     }
