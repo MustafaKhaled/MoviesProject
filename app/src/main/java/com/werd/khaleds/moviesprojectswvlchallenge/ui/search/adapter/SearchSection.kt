@@ -19,7 +19,7 @@ import kotlin.collections.ArrayList
 
 
 internal class SearchSection(
-    moviesList: ArrayList<MovieItem>,
+    private var moviesList: ArrayList<MovieItem>,
     title: Int
 ) : FilterableSection, Section(
         SectionParameters.builder()
@@ -27,10 +27,11 @@ internal class SearchSection(
             .headerResourceId(R.layout.header_item_search)
             .build()
     ) {
-    private var filteredList: ArrayList<MovieItem>
-    private var title: Int
+    private var filteredList: ArrayList<MovieItem> = ArrayList(moviesList)
+    private var list: ArrayList<MovieItem>
+    private var title: Int = 0
      init {
-         this.filteredList = ArrayList(moviesList)
+         this.list = filteredList
          this.title = title
      }
 
@@ -64,20 +65,20 @@ internal class SearchSection(
     override fun filter(query: String?) {
         if (TextUtils.isEmpty(query)) {
             filteredList.clear()
-            filteredList.addAll(filteredList)
+            filteredList.addAll(moviesList)
             this.isVisible = true
         } else {
-            filteredList.clear()
-            for (movieItem in filteredList) {
-                if (query?.toLowerCase(Locale.getDefault())?.let {
-                        movieItem.title?.toLowerCase(Locale.getDefault())
-                            ?.contains(it)
-                    }!!
-                ) {
-                    filteredList.add(movieItem)
-                }
+            filteredList.clear();
+            for (movie in moviesList) {
+            if (query?.toLowerCase(Locale.getDefault())?.let {
+                    movie.title?.toLowerCase(Locale.getDefault())
+                        ?.contains(it)
+                }!! && filteredList.size<5) {
+                filteredList.add(movie);
             }
-            this.isVisible = filteredList.isNotEmpty()
+        }
+
+            this.isVisible = filteredList.isNotEmpty();
         }
     }
 

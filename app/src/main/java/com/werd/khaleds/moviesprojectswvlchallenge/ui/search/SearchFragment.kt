@@ -7,7 +7,6 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.SortedList
 import com.werd.khaleds.moviesprojectswvlchallenge.MyApplication
 import com.werd.khaleds.moviesprojectswvlchallenge.R
 import com.werd.khaleds.moviesprojectswvlchallenge.data.di.component.DaggerDataComponent
@@ -25,14 +24,13 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.Comparator
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class SearchFragment : Fragment() {
     val TAG = javaClass.simpleName
     private val sortedList = ArrayList<MovieItem>()
     private val moviesMap = TreeMap<Int, ArrayList<MovieItem>>()
-
+    private val filteredList = ArrayList<MovieItem>()
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: MoviesSharedViewModel
@@ -77,15 +75,15 @@ class SearchFragment : Fragment() {
             moviesList.addAll(result.data.movies)
             sortList(moviesList)
             sortListGrouping(sortedList)
-            moviesMap.forEach { (key, value) ->
-                sectionedAdapter.addSection(SearchSection(value, key))
+            moviesMap.forEach{(key, value) ->
+                sectionedAdapter.addSection(SearchSection(value,key))
             }
 
         }
     }
 
-    private fun sortListGrouping(sortedList: ArrayList<MovieItem>) {
-        for (movie in sortedList) {
+    private fun sortListGrouping(filteredList: ArrayList<MovieItem>) {
+        for (movie in filteredList) {
             if (moviesMap.containsKey(movie.year)) {
                 val currentList = moviesMap[movie.year]
                 currentList?.add(movie)
@@ -115,6 +113,7 @@ class SearchFragment : Fragment() {
         inflater.inflate(R.menu.search_menu, menu)
         val searchView =
             SearchView((context as MainActivity).supportActionBar?.themedContext ?: context)
+        searchView.isIconified = false
         menu.findItem(R.id.action_search).apply {
             setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW or MenuItem.SHOW_AS_ACTION_IF_ROOM)
             actionView = searchView
@@ -126,15 +125,11 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(query: String): Boolean {
-                moviesMap.forEach{(key, value) ->
-
-
+                for (section in sectionedAdapter.copyOfSectionsMap.values) {
+                    if (section is FilterableSection) {
+                        (section as FilterableSection).filter(query)
+                    }
                 }
-//                for (section in sectionedAdapter.copyOfSectionsMap.values) {
-//                    if (section is FilterableSection) {
-//                        (section as FilterableSection).filter(query)
-//                    }
-//                }
                 sectionedAdapter.notifyDataSetChanged()
 
                 return true
