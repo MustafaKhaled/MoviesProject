@@ -38,7 +38,7 @@ class AllMoviesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        DaggerAllMoviesComponent.builder()
+        val depend = DaggerAllMoviesComponent.builder()
             .presentationComponent(
                 DaggerPresentationComponent.builder()
                     .dataComponent(
@@ -46,7 +46,8 @@ class AllMoviesFragment : Fragment() {
                             .applicationComponent(MyApplication.applicationComponent).build()
                     )
                     .build()
-            ).build().inject(this)
+            ).build()
+        depend.inject(this)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(AllMoviesViewModel::class.java)
         startMoviesParsing()

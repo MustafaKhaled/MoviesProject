@@ -25,14 +25,16 @@ class MovieDetailsFragment: Fragment() {
     lateinit var viewModel: MovieDetailsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerAllMoviesComponent.builder()
+        val depend = DaggerAllMoviesComponent.builder()
             .presentationComponent(
                 DaggerPresentationComponent.builder()
                     .dataComponent(
                         DaggerDataComponent.builder()
                             .applicationComponent(MyApplication.applicationComponent).build())
                     .build()
-            ).build().inject(this)
+            ).build()
+
+        depend.inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MovieDetailsViewModel::class.java)
     }
 
