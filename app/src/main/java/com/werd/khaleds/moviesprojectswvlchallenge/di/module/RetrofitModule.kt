@@ -3,6 +3,7 @@ package com.werd.khaleds.moviesprojectswvlchallenge.di.module
 import com.werd.khaleds.moviesprojectswvlchallenge.di.scope.ApplicationScope
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.werd.khaleds.moviesprojectswvlchallenge.BuildConfig
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -19,7 +20,7 @@ class RetrofitModule {
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
-//            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .client(okHttpClient)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(gsonConverterFactory)
