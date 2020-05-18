@@ -11,10 +11,9 @@ import com.werd.khaleds.moviesprojectswvlchallenge.util.Results
 import java.lang.reflect.Type
 import javax.inject.Inject
 
-class MoviesParsableImpl @Inject constructor(): MoviesParsable {
+class MoviesParsableImpl @Inject constructor(var moviesLocalResult: MoviesLocalResult): MoviesParsable {
     private val TAG = javaClass.simpleName
     private val fileUtils = FileUtils()
-    private var moviesLocalResult =  MoviesLocalResult(null)
     override fun parseMovies() {
         Log.d(TAG,"current thread is ".plus(Thread.currentThread().name))
         val gson = Gson()

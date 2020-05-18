@@ -25,7 +25,7 @@ class MovieDetailsFragment: Fragment() {
     lateinit var viewModel: MovieDetailsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerMovieDetailsComponent.builder()
+        DaggerAllMoviesComponent.builder()
             .presentationComponent(
                 DaggerPresentationComponent.builder()
                     .dataComponent(

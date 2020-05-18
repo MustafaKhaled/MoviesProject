@@ -10,4 +10,9 @@ data class MovieItem(
     val rating: Int?,
     val title: String?,
     val year: Int?
-) : Parcelable
+) : Parcelable, Comparator<MovieItem> {
+    override fun compare(o1: MovieItem?, o2: MovieItem?): Int {
+        return o1?.rating!!.compareTo(o2?.rating!!)
+    }
+
+}
