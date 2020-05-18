@@ -44,11 +44,7 @@ class MovieDetailsFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel.readMovies.observe(this, Observer {
-            if (it!=null){
-                Log.d(TAG,"Movies returned successfully")
-            }
-        })
+
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 }

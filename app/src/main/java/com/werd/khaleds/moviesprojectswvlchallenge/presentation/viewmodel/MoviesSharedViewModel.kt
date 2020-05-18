@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.werd.khaleds.moviesprojectswvlchallenge.util.Results
 import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MoviesLocalResult
 import com.werd.khaleds.moviesprojectswvlchallenge.domain.usecases.AllMoviesUseCase
+import com.werd.khaleds.moviesprojectswvlchallenge.domain.usecases.FetchImagesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -25,4 +26,5 @@ class MoviesSharedViewModel @Inject constructor(private val useCase: AllMoviesUs
     fun readMovies(): LiveData<Results<MoviesLocalResult>> {
         return  moviesMutableLiveData
     }
+
 }
