@@ -4,6 +4,7 @@ import com.werd.khaleds.moviesprojectswvlchallenge.di.scope.ApplicationScope
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.werd.khaleds.moviesprojectswvlchallenge.BuildConfig
+import com.werd.khaleds.moviesprojectswvlchallenge.data.remote.endpoints.ApiService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -39,10 +40,10 @@ class RetrofitModule {
     fun providesGsonConverterFactory(gson: Gson): GsonConverterFactory {
         return GsonConverterFactory.create(gson)
     }
-//    @ApplicationScope
-//    @Provides
-//    fun createSettingsAPI(retrofit: Retrofit): ApiServices {
-//        return retrofit.create(ApiServices::class.java)
-//    }
+    @ApplicationScope
+    @Provides
+    fun providesApiService(retrofit: Retrofit): ApiService {
+        return retrofit.create(ApiService::class.java)
+    }
 
 }
