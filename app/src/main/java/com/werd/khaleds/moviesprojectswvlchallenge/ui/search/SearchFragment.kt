@@ -60,7 +60,7 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        activity?.title = "Search Movies"
+        activity?.title = getString(R.string.search_movies_title)
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
 

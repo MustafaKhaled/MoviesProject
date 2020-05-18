@@ -4,4 +4,5 @@
     <string name="ascending_menu">Ascending</string>
     <string name="descending_menu">Descending</string>
     <string name="search_menu">search</string>
+    <string name="search_movies_title">Search Movies</string>
 </resources>
