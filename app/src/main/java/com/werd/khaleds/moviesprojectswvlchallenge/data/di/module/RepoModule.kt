@@ -3,9 +3,8 @@ package com.werd.khaleds.moviesprojectswvlchallenge.data.di.module
 import com.werd.khaleds.moviesprojectswvlchallenge.data.di.scope.DataComponentScope
 import com.werd.khaleds.moviesprojectswvlchallenge.data.repo.FlickrImagesRepoImpl
 import com.werd.khaleds.moviesprojectswvlchallenge.data.repo.MoviesParsableImpl
-import com.werd.khaleds.moviesprojectswvlchallenge.domain.repo.FlickrImagesConsumer
+import com.werd.khaleds.moviesprojectswvlchallenge.domain.repo.FlickrImagesConsumerRepo
 import com.werd.khaleds.moviesprojectswvlchallenge.domain.repo.MoviesParsable
-import com.werd.khaleds.moviesprojectswvlchallenge.domain.usecases.AllMoviesUseCase
 import dagger.Binds
 import dagger.Module
 
@@ -17,6 +16,6 @@ interface RepoModule {
 
     @DataComponentScope
     @Binds
-    fun bindsFlickrService(flickrImagesRepoImpl: FlickrImagesRepoImpl): FlickrImagesConsumer
+    fun bindsFlickrService(flickrImagesRepoImpl: FlickrImagesRepoImpl): FlickrImagesConsumerRepo
     
 }

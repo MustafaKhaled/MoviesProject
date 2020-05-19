@@ -4,6 +4,6 @@ import com.werd.khaleds.moviesprojectswvlchallenge.data.remote.endpoints.ApiServ
 import com.werd.khaleds.moviesprojectswvlchallenge.data.remote.entities.FlickrModel
 import io.reactivex.Single
 
-interface FlickrImagesConsumer  {
-    fun fetchFlickrImages (title: String): Single<FlickrModel>
+interface FlickrImagesConsumerRepo  {
+    fun fetchFlickrImages (title: String?): Single<FlickrModel>
 }
