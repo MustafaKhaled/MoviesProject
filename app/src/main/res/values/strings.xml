@@ -5,4 +5,7 @@
     <string name="descending_menu">Descending</string>
     <string name="search_menu">search</string>
     <string name="search_movies_title">Search Movies</string>
+    <string name="genres_label">Genres</string>
+    <string name="cast_label">Cast</string>
+    <string name="album_label">Album</string>
 </resources>
