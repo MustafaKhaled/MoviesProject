@@ -21,7 +21,7 @@ android {
     buildTypes {
 
         debug {
-            buildConfigField "String", "BASE_URL", '"http​s:​//api.flickr.​com​/services/rest/?method=flickr.photos.​search"'
+            buildConfigField "String", "BASE_URL", '"https://www.flickr.com/services/rest/"'
             buildConfigField "String", "APIKEY", '"33275408f6bb24a2123bccc4e8e155d6"'
         }
 
@@ -65,7 +65,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.2.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
     // Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.1'
     implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'

@@ -158,8 +158,8 @@ class AllMoviesFragment : Fragment() {
             layoutManager.reverseLayout = true
             layoutManager.stackFromEnd = true
         }
-
     }
+
 
 
 }
