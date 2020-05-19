@@ -75,7 +75,7 @@ class AllMoviesFragment : Fragment() {
                     is Success -> {
                         showResults(true)
                         Log.d(TAG, "Data observed ".plus(it.data))
-                        addMoviesList(it.data)
+                        addMoviesList(it.data as MoviesLocalResult)
 
                     }
 
