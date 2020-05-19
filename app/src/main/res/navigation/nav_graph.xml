@@ -25,5 +25,9 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.werd.khaleds.moviesprojectswvlchallenge.ui.search.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_movieDetails"
+            app:destination="@id/movieDetails" />
+    </fragment>
 </navigation>

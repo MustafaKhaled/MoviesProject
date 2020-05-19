@@ -6,6 +6,7 @@ import android.view.*
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.werd.khaleds.moviesprojectswvlchallenge.MyApplication
 import com.werd.khaleds.moviesprojectswvlchallenge.R
@@ -15,10 +16,12 @@ import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component.Dag
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.MoviesSharedViewModel
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.MainActivity
+import com.werd.khaleds.moviesprojectswvlchallenge.ui.master.AllMoviesFragmentDirections
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.search.adapter.SearchSection
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.search.di.component.DaggerSearchComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.util.Results
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
+import kotlinx.android.synthetic.main.fragment_all_movies.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import java.util.*
 import javax.inject.Inject
@@ -26,7 +29,7 @@ import kotlin.Comparator
 import kotlin.collections.ArrayList
 
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(),SearchSection.ClickListener {
     val TAG = javaClass.simpleName
     private val sortedList = ArrayList<MovieItem>()
     private val moviesMap = TreeMap<Int, ArrayList<MovieItem>>()
@@ -76,7 +79,7 @@ class SearchFragment : Fragment() {
             sortList(moviesList)
             sortListGrouping(sortedList)
             moviesMap.forEach{(key, value) ->
-                sectionedAdapter.addSection(SearchSection(value,key))
+                sectionedAdapter.addSection(SearchSection(value,key,this))
             }
 
         }
@@ -136,6 +139,15 @@ class SearchFragment : Fragment() {
             }
         })
         searchView.setOnClickListener { view -> }
+    }
+
+    override fun onItemRootViewClicked(movieItem: MovieItem) {
+        movieItemClicked(movieItem)
+    }
+
+    private fun movieItemClicked(movieItem: MovieItem) {
+        val action = SearchFragmentDirections.actionSearchFragmentToMovieDetails(movieItem)
+        Navigation.findNavController(searchRV).navigate(action)
     }
 
 

@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.werd.khaleds.moviesprojectswvlchallenge.MyApplication
 import com.werd.khaleds.moviesprojectswvlchallenge.R
 import com.werd.khaleds.moviesprojectswvlchallenge.data.di.component.DaggerDataComponent
@@ -17,6 +19,8 @@ import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MovieItem
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component.DaggerPresentationComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.MovieDetailsViewModel
+import com.werd.khaleds.moviesprojectswvlchallenge.ui.details.adapter.FlickrPhotsAdapter
+import com.werd.khaleds.moviesprojectswvlchallenge.ui.master.AllMoviesAdapter
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.master.di.component.DaggerAllMoviesComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.util.Results
 import com.werd.khaleds.moviesprojectswvlchallenge.util.snack
@@ -28,6 +32,7 @@ import javax.inject.Inject
 class MovieDetailsFragment: Fragment() {
     val TAG = javaClass.simpleName
     lateinit var movie: MovieItem
+    lateinit var adapter:FlickrPhotsAdapter
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: MovieDetailsViewModel
@@ -78,8 +83,10 @@ class MovieDetailsFragment: Fragment() {
             when(it){
                 is  Results.Success -> {
                     showResults(true)
+                    adapter.addAll(it.data.photos?.photo)
                 }
                 is  Results.Error -> {
+                    showResults(true)
                     photosRv.snack(getString(R.string.error_fetch_movies))
                 }
                 is  Results.Loading -> {
@@ -87,6 +94,13 @@ class MovieDetailsFragment: Fragment() {
                 }
             }
         })
+    }
+
+    private fun setupRecyclerView() {
+        adapter = FlickrPhotsAdapter()
+        val layoutManager = GridLayoutManager(context,2, LinearLayoutManager.VERTICAL, false)
+        photosRv.layoutManager = layoutManager
+        photosRv.adapter = adapter
     }
 
 
@@ -103,6 +117,7 @@ class MovieDetailsFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         populateViews()
         observeFlickrPhotos()
+        setupRecyclerView()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

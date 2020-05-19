@@ -2,37 +2,36 @@ package com.werd.khaleds.moviesprojectswvlchallenge.ui.search.adapter
 
 import android.text.TextUtils
 import android.view.View
-import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.werd.khaleds.moviesprojectswvlchallenge.R
 import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MovieItem
-import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MoviesLocalResult
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.search.FilterableSection
 import io.github.luizgrp.sectionedrecyclerviewadapter.Section
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
-import kotlinx.android.synthetic.main.all_movies_list_item.view.*
 import kotlinx.android.synthetic.main.header_item_search.view.*
 import kotlinx.android.synthetic.main.movie_item_search.view.*
-
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 internal class SearchSection(
+
     private var moviesList: ArrayList<MovieItem>,
-    title: Int
-) : FilterableSection, Section(
+    title: Int,
+    clickListener:ClickListener) : FilterableSection, Section(
         SectionParameters.builder()
             .itemResourceId(R.layout.movie_item_search)
             .headerResourceId(R.layout.header_item_search)
             .build()
     ) {
+    private val clickListener:ClickListener
     private var filteredList: ArrayList<MovieItem> = ArrayList(moviesList)
     private var list: ArrayList<MovieItem>
     private var title: Int = 0
      init {
          this.list = filteredList
          this.title = title
+         this.clickListener = clickListener
      }
 
     override fun getContentItemsTotal(): Int {
@@ -40,7 +39,7 @@ internal class SearchSection(
     }
 
     override fun getItemViewHolder(view: View): RecyclerView.ViewHolder {
-        return ItemViewHolder(view)
+        return ItemViewHolder(view,clickListener)
     }
 
     override fun onBindItemViewHolder(
@@ -68,7 +67,7 @@ internal class SearchSection(
             filteredList.addAll(moviesList)
             this.isVisible = true
         } else {
-            filteredList.clear();
+            filteredList.clear()
             for (movie in moviesList) {
             if (query?.toLowerCase(Locale.getDefault())?.let {
                     movie.title?.toLowerCase(Locale.getDefault())
@@ -88,13 +87,23 @@ internal class SearchSection(
         }
     }
 
-    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ItemViewHolder(itemView: View, val clickListener:ClickListener) : RecyclerView.ViewHolder(itemView) {
         fun bind(movieItem: MovieItem) = with(itemView) {
             searchTitle.text = movieItem.title
-            if(movieItem.rating!=null)  searchRatingBar.rating = movieItem.rating.toFloat()        }
+            if(movieItem.rating!=null)  searchRatingBar.rating = movieItem.rating.toFloat()
+            itemView.setOnClickListener {
+                clickListener.onItemRootViewClicked(movieItem)
+            }
+
+        }
 
     }
 
+    internal interface ClickListener {
+        fun onItemRootViewClicked(
+            movieItem: MovieItem
+        )
+    }
 
 
 }

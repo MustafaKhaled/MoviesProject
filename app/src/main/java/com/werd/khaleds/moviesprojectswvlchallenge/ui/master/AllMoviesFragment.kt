@@ -133,7 +133,7 @@ class AllMoviesFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = AllMoviesAdapter { article: MovieItem -> movieItemClicked(article) }
+        adapter = AllMoviesAdapter { movie: MovieItem -> movieItemClicked(movie) }
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         moviesList.layoutManager = layoutManager
         moviesList.adapter = adapter

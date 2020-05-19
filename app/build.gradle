@@ -23,6 +23,8 @@ android {
         debug {
             buildConfigField "String", "BASE_URL", '"https://www.flickr.com/services/rest/"'
             buildConfigField "String", "APIKEY", '"33275408f6bb24a2123bccc4e8e155d6"'
+            buildConfigField "String", "Flickr_URL", '"https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg"'
+
         }
 
         release {
@@ -112,6 +114,10 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.14'
     //RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 
 
 }
