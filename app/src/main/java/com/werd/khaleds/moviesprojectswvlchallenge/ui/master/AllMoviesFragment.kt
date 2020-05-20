@@ -60,6 +60,7 @@ class AllMoviesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.app_name)
         return inflater.inflate(R.layout.fragment_all_movies, container, false)
     }
 

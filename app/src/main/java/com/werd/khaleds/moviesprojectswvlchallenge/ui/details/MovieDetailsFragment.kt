@@ -53,8 +53,9 @@ class MovieDetailsFragment: Fragment() {
                     .build()
             ).build().inject(this)
         setHasOptionsMenu(true)
-        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         bindArguments(arguments)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = movie.title
         viewModel = ViewModelProvider(this, viewModelFactory).get(MovieDetailsViewModel::class.java)
         movie.title?.let { viewModel.requestImagesFromFlickr(it) }
     }
