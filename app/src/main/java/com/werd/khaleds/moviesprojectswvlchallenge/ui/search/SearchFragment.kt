@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -17,12 +18,10 @@ import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component.Dag
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.MoviesSharedViewModel
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.MainActivity
-import com.werd.khaleds.moviesprojectswvlchallenge.ui.master.AllMoviesFragmentDirections
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.search.adapter.SearchSection
 import com.werd.khaleds.moviesprojectswvlchallenge.ui.search.di.component.DaggerSearchComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.util.Results
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
-import kotlinx.android.synthetic.main.fragment_all_movies.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import java.util.*
 import javax.inject.Inject
@@ -42,6 +41,7 @@ class SearchFragment : Fragment(),SearchSection.ClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         DaggerSearchComponent.builder()
             .presentationComponent(
                 DaggerPresentationComponent.builder()
@@ -108,6 +108,12 @@ class SearchFragment : Fragment(),SearchSection.ClickListener {
         })
         //Add list after sorting
         sortedList.addAll(moviesList)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home)
+            Navigation.findNavController(searchRV).navigateUp()
+        return true
     }
 
 

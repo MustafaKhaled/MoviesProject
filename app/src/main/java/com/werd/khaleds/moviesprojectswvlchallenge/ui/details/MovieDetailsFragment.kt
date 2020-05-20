@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -52,6 +53,7 @@ class MovieDetailsFragment: Fragment() {
                     .build()
             ).build().inject(this)
         setHasOptionsMenu(true)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         bindArguments(arguments)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MovieDetailsViewModel::class.java)
         movie.title?.let { viewModel.requestImagesFromFlickr(it) }
@@ -81,7 +83,7 @@ class MovieDetailsFragment: Fragment() {
     }
 
     private fun observeFlickrPhotos(){
-        viewModel.observeFlicksPhotos().observe(this, Observer {
+        viewModel.observeFlicksPhotos().observe(viewLifecycleOwner, Observer {
 
             when(it){
                 is  Results.Success -> {
@@ -126,7 +128,7 @@ class MovieDetailsFragment: Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home)
-            Navigation.findNavController(year).navigateUp()
+            activity?.view?.let { Navigation.findNavController(it).navigateUp() }
         return super.onOptionsItemSelected(item)
     }
 }

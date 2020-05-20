@@ -3,6 +3,7 @@ package com.werd.khaleds.moviesprojectswvlchallenge.ui.master
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.fragment_all_movies.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -27,7 +28,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AllMoviesFragment : Fragment() {
-    private val TAG = javaClass.simpleName
     private lateinit var sharedViewModel: MoviesSharedViewModel
     private lateinit var adapter: AllMoviesAdapter
     private lateinit var layoutManager: LinearLayoutManager
@@ -50,7 +50,6 @@ class AllMoviesFragment : Fragment() {
                     .build()
             ).build()
         depend.inject(this)
-
         sharedViewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(MoviesSharedViewModel::class.java) }!!
         startMoviesParsing()
     }
@@ -60,6 +59,7 @@ class AllMoviesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         return inflater.inflate(R.layout.fragment_all_movies, container, false)
     }
 
@@ -74,7 +74,6 @@ class AllMoviesFragment : Fragment() {
 
                     is Success -> {
                         showResults(true)
-                        Log.d(TAG, "Data observed ".plus(it.data))
                         addMoviesList(it.data as MoviesLocalResult)
 
                     }
@@ -145,7 +144,6 @@ class AllMoviesFragment : Fragment() {
     }
 
     private fun addMoviesList(moviesList: MoviesLocalResult) {
-        Log.d(TAG, "Add movies to RecyclerView ".plus(moviesList.movies))
         adapter.addAll(moviesList.movies)
     }
 

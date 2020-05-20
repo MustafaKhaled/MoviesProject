@@ -44,25 +44,3 @@ class MovieDetailsViewModel @Inject constructor(
 }
 
 
-
-//    fun requestImagesFromFlickr(title: String) {
-//
-//        compositeDisposable.add(fetchImagesUseCase.requestPhotos(title)
-//            .observeOn(Schedulers.trampoline())
-//            .subscribeOn(Schedulers.io())
-//            .doOnSubscribe { photosMutableLiveData.postValue(Results.Loading) }
-//            .subscribe({ result -> photosMutableLiveData.postValue(Results.Success(result)) },
-//                { throwable -> photosMutableLiveData.postValue(Results.Success(throwable)) }
-//            ))
-//    }
-//
-//    fun observeFlicksPhotos(): LiveData<Results>{
-//            return photosMutableLiveData
-//    }
-//
-//    override fun onCleared() {
-//        super.onCleared()
-//        compositeDisposable.dispose()
-//    }
-
-
