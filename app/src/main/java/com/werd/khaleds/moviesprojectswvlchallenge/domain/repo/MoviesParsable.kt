@@ -5,6 +5,6 @@ import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MoviesLocalR
 
 interface MoviesParsable {
     fun parseMovies()
-    fun getParsedMovies(): Results<MoviesLocalResult>
+    fun getParsedMovies(): Results
     fun saveParsedData()
 }

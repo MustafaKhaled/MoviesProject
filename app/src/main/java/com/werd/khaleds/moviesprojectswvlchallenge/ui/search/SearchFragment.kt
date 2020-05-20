@@ -12,6 +12,7 @@ import com.werd.khaleds.moviesprojectswvlchallenge.MyApplication
 import com.werd.khaleds.moviesprojectswvlchallenge.R
 import com.werd.khaleds.moviesprojectswvlchallenge.data.di.component.DaggerDataComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MovieItem
+import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MoviesLocalResult
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component.DaggerPresentationComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.MoviesSharedViewModel
@@ -75,7 +76,7 @@ class SearchFragment : Fragment(),SearchSection.ClickListener {
         val result = viewModel.readMovies().value
         if (result is Results.Success) {
             val moviesList = ArrayList<MovieItem>()
-            moviesList.addAll(result.data.movies)
+            moviesList.addAll((result.data as MoviesLocalResult).movies)
             sortList(moviesList)
             sortListGrouping(sortedList)
             moviesMap.forEach{(key, value) ->

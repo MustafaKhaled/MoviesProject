@@ -12,9 +12,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MoviesSharedViewModel @Inject constructor(private val useCase: AllMoviesUseCase):ViewModel() {
-    private val moviesMutableLiveData = MutableLiveData<Results<MoviesLocalResult>>()
+    private val moviesMutableLiveData = MutableLiveData<Results>()
     init {
-        moviesMutableLiveData.postValue(Results.Loading())
+        moviesMutableLiveData.postValue(Results.Loading)
     }
     fun parseJson(){
         viewModelScope.launch(Dispatchers.Default){
@@ -23,7 +23,7 @@ class MoviesSharedViewModel @Inject constructor(private val useCase: AllMoviesUs
         }
     }
 
-    fun readMovies(): LiveData<Results<MoviesLocalResult>> {
+    fun readMovies(): LiveData<Results> {
         return  moviesMutableLiveData
     }
 

@@ -26,7 +26,7 @@ class MoviesParsableImpl @Inject constructor(var moviesLocalResult: MoviesLocalR
         Log.d(TAG,"result size ".plus(moviesLocalResult.movies?.size))
     }
 
-    override fun getParsedMovies(): Results<MoviesLocalResult> {
+    override fun getParsedMovies(): Results {
         return Results.Success(moviesLocalResult)
     }
 

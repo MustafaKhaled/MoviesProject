@@ -16,6 +16,9 @@ import com.werd.khaleds.moviesprojectswvlchallenge.R
 import com.werd.khaleds.moviesprojectswvlchallenge.data.di.component.DaggerDataComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.data.di.module.MoviesLocalResultModule
 import com.werd.khaleds.moviesprojectswvlchallenge.data.local.model.MovieItem
+import com.werd.khaleds.moviesprojectswvlchallenge.data.remote.entities.FlickrPhotosResponse
+import com.werd.khaleds.moviesprojectswvlchallenge.data.remote.entities.Photo
+import com.werd.khaleds.moviesprojectswvlchallenge.data.remote.entities.Photos
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.di.component.DaggerPresentationComponent
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.factory.ViewModelFactory
 import com.werd.khaleds.moviesprojectswvlchallenge.presentation.viewmodel.MovieDetailsViewModel
@@ -83,7 +86,8 @@ class MovieDetailsFragment: Fragment() {
             when(it){
                 is  Results.Success -> {
                     showResults(true)
-                    adapter.addAll(it.data.photos?.photo)
+                    val res = it.data as FlickrPhotosResponse
+                    adapter.addAll(res.photos?.photo)
                 }
                 is  Results.Error -> {
                     showResults(true)

@@ -10,7 +10,7 @@ class AllMoviesUseCase @Inject constructor(private val moviesParsable: MoviesPar
         moviesParsable.parseMovies()
     }
 
-    fun getMovies(): Results<MoviesLocalResult> {
+    fun getMovies(): Results {
         return moviesParsable.getParsedMovies()
     }
 
