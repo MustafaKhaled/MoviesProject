@@ -8,9 +8,8 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 
-class FetchImagesUseCase @Inject constructor(private val flickrImagesConsumerRepo: FlickrImagesConsumerRepo):
-    PrimaryUseCase<String, FlickrPhotosResponse>() {
-    override fun buildObservable(params: String?): Single<FlickrPhotosResponse> {
+class FetchImagesUseCase @Inject constructor(private val flickrImagesConsumerRepo: FlickrImagesConsumerRepo){
+    fun requestPhotos(params: String?): Single<FlickrPhotosResponse> {
         return flickrImagesConsumerRepo.fetchFlickrImages(params)
     }
 
