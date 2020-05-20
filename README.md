@@ -7,9 +7,9 @@ This is an application that can load movies from a local file, you search for th
 Make sure your installed Android studio with Kotlin support.
 
 ### Step 2
-Clone this repo to your local machine using [this link](https://github.com/MustafaKhaled/WeatherLoggerAutoUpdate.git)
+Clone this repo to your local machine using [this link](https://github.com/MustafaKhaled/MoviesProject.git)
 
-Step 3
+### Step 3
 Make an account on [Flickr](https://www.flickr.com/services/api/flickr.photos.search.htm), to be able to access their endpoint to see the photos of movies
 
 
